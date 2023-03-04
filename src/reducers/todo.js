@@ -1,14 +1,17 @@
 const todoReducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_TODO":
-      state = [...state, action.payload];
-      return state;
-    case "DELETE_TODO":
-        let data = [...state]
-        let index = data.findIndex(d=> d.id == action.payload)
-      data.splice(index, 1)
-      return data;
-  }
-};
+    switch (action.type) {
+        case"ADD":
+        return [...state,action.payload];
+        return state;
 
-export { todoReducer };
+        case"DELETE" :
+        return state.filter((item)=>{
+            if(item.id!=action.payload.id){
+                return state;
+            }
+        });
+        default:return state;
+    }
+}
+
+export { todoReducer }

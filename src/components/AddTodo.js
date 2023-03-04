@@ -1,21 +1,36 @@
-import React from "react";
+import React,{useState} from "react";
 
 const AddTodo = ({ dispatch }) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let todoData = { id: Date.now(), title: e.target.title.value };
-    dispatch({ type: "ADD_TODO", payload: todoData });
-    e.target.reset();
-  }
 
-  return (
-    <div className="form-wrapper">
-      <form onSubmit={handleSubmit} id="todo-form">
-        <input name="title" id="todo-input" />
-        <button type="submit">Add</button>
-      </form>
-    </div>
-  )
+    const [taskArr,setTaskArr] =useState([]);
+    const [inputVal,setVal] = useState("");
+    const [DateId,setId] = useState( new Date().getTime().toString());
+
+    function submitHandler (e) {
+        e.preventDefault();  
+        setId( new Date().getTime().toString()) ;
+        setTaskArr(
+            [...taskArr,
+                {id:DateId,title:inputVal}
+            ]
+        )
+        dispatch({type:"ADD",payload:{title:inputVal,id:DateId}});
+        setVal("");
+    }
+
+
+    function inputFun(e) {
+        setVal(e.target.value);
+    }
+
+    return (
+        <>
+        <form id="todo-form" onSubmit={submitHandler}>
+            <input id="todo-input" type="textarea" required onChange={inputFun} value={inputVal}/>
+            <button type="submit">submit</button>
+        </form>
+        </>
+    )
 }
 
 export { AddTodo }

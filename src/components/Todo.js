@@ -1,16 +1,35 @@
-import React from 'react';
-const Todo = ({data, index, dispatch}) => {
+import React from "react";
+const Todo = ({ dispatch, state }) => {
 
-    const handleDelete = (index)=> {
-        dispatch({type: "DELETE_TODO", payload:data.id})
-    }
+  console.log("state is ",state);
+  return (
 
-    return (
-        <div className="todo">
-            <div className="todo-title">{data.title}</div>
-            <button className="todo-delete" onClick={handleDelete}>Delete</button>
-        </div>
-    )
-}
+          <>
+            {state.map((item) => {
+              
+              return (
+                <div className="todo" key={item.id}> 
+                
+                  <div id={item.id} className="todo-title">
+                  {item.title}
+                  <button
+                    onClick={() =>
+                      dispatch({ type: "DELETE",payload:{title:item.title,id:item.id} })
+                    }
+                    className="todo-delete"
+                  >
+                    DELETE
+                  </button>
+                </div>
+                
+                </div>
+              );
+            })}
+            </>
+  );
+};
+
+
 
 export { Todo }
+
